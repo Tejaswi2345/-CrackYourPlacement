@@ -1,0 +1,41 @@
+import java.util.*;
+
+class Solution {
+    public void gameOfLife(int[][] board) {
+        int[][] directions = {{1, 0}, {1, -1}, {0, -1}, {-1, -1}, {-1, 0}, {-1, 1}, {0, 1}, {1, 1}};
+        
+        int row = board.length;
+        int col = board[0].length;
+        
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                int live_cell = 0;
+                
+                for (int[] dir : directions) {
+                    int x = i + dir[0];
+                    int y = j + dir[1];
+                    if (x >= 0 && x < row && y >= 0 && y < col && Math.abs(board[x][y]) == 1) {
+                        live_cell++;
+                    }
+                }
+               
+                if (board[i][j] == 1 && (live_cell < 2 || live_cell > 3)) {
+                    board[i][j] = -1; 
+                }
+                if (board[i][j] == 0 && live_cell == 3) {
+                    board[i][j] = 2;   
+                }
+            }
+        }
+       
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (board[i][j] > 0) {
+                    board[i][j] = 1;  
+                } else {
+                    board[i][j] = 0;  
+                }
+            }
+        }
+    }
+}
